@@ -191,7 +191,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - install_awscli
+      - install_ansible
       - add_ssh_keys:
           fingerprints:
             - "b6:3d:33:9b:76:47:d6:bc:04:1d:c6:e4:ff:da:6d:be"
