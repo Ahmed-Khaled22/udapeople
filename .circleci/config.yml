@@ -189,9 +189,8 @@ jobs:
 
   configure-infrastructure:
     docker:
-      # Docker image here that supports Ansible
-    steps:
       - image: cimg/base:stable
+    steps:
       - install_awscli
       - add_ssh_keys:
           fingerprints:
