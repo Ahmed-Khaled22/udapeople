@@ -218,9 +218,8 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            # npm cache clean --force
             npm install @npmcli/package-json
-            npm audit fix --force
+            npm audit fix
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
