@@ -219,6 +219,7 @@ jobs:
           command: |
             cd backend
             npm install
+            npm audit fix
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to memstash
@@ -232,9 +233,10 @@ jobs:
 
 #   deploy-frontend:
 #     docker:
-#       # Docker image here that supports AWS CLI
+#       - image: cimg/node:13.8.0
 #     steps:
-#       # Checkout code from git
+#       - checkout
+      # - install_awscli
 #       - run:
 #           name: Install dependencies
 #           command: |
@@ -249,13 +251,15 @@ jobs:
 #           name: Deploy frontend objects
 #           command: |
 #             # your code here
-#       # Here's where you will add some code to rollback on failure      
+      # - destroy-environment 
+      # - revert-migrations      
                     
 #   deploy-backend:
 #     docker:
-#       # Docker image here that supports Ansible
+#       - image: cimg/node:13.8.0
 #     steps:
-#       # Checkout code from git
+#       - checkout
+      # - install_awscli
 #       # Add ssh keys with fingerprint
 #       # attach workspace
 #       - run:
@@ -266,13 +270,15 @@ jobs:
 #           name: Deploy backend
 #           command: |
 #             # your code here
-#       # Here's where you will add some code to rollback on failure  
+      # - destroy-environment 
+      # - revert-migrations
 
 #   smoke-test:
 #     docker:
-#       # Lightweight Docker image 
+#       - image: cimg/node:13.8.0 
 #     steps:
-#       # Checkout code from git
+#       - checkout
+      # - install_awscli
 #       - run:
 #           name: Install dependencies
 #           command: |
@@ -289,13 +295,15 @@ jobs:
 #           name: Frontend smoke test.
 #           command: |
 #             # your code here
-#       # Here's where you will add some code to rollback on failure  
+      # - destroy-environment 
+      # - revert-migrations
 
 #   cloudfront-update:
 #     docker:
-#       # Docker image here that supports AWS CLI
+#       - image: cimg/node:13.8.0
 #     steps:
-#       # Checkout code from git
+#       - checkout
+      # - install_awscli
 #       - run:
 #           name: Install dependencies
 #           command: |
@@ -304,13 +312,14 @@ jobs:
 #           name: Update cloudfront distribution
 #           command: |
 #             # your code here
-#       # Here's where you will add some code to rollback on failure  
-
+      # - destroy-environment 
+      # - revert-migrations
 # cleanup:
 #     docker:
-#       # Docker image here
+#       - image: cimg/node:13.8.0
 #     steps:
-#       # Checkout code from git
+#       - checkout
+      # - install_awscli
 #       - run:
 #           name: Get old stack workflow id
 #           command: |
