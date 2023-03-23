@@ -218,7 +218,7 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm set audit false
+            # npm set audit false
             npm install @npmcli/package-json
             # npm fund
             # npm audit fix --force --audit-level=critical
@@ -229,11 +229,11 @@ jobs:
             # npm update winston-loggly-bulk
             # npm audit fix
             npm run migrations > migrations_dump.txt
-            cat migrations_dump.txt
+            # cat migrations_dump.txt
       - run:
           name: Send migration results to memstash
           command: |
-            cat ~/project/backend/migrations_dump.txt
+            # cat ~/project/backend/migrations_dump.txt
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
               curl https://kvdb.io/6eLY5UTvP4v8SmJrJZREtn/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
