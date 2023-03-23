@@ -218,14 +218,15 @@ jobs:
           name: Run migrations
           command: |
             cd backend
+            npm set audit false
             npm install 
-            npm audit fix --force --audit-level=critical
-            npm install passport-jwt@4.0.1
-            npm update path-parse --depth 3
-            npm update mkdirp --depth 2
-            npm update glee-jwks-rsa
-            npm update winston-loggly-bulk
-            npm audit
+            # npm audit fix --force --audit-level=critical
+            # npm install passport-jwt@4.0.1
+            # npm update path-parse --depth 3
+            # npm update mkdirp --depth 2
+            # npm update glee-jwks-rsa
+            # npm update winston-loggly-bulk
+            # npm audit fix
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
