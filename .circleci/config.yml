@@ -418,15 +418,8 @@
 
 
 version: 2.1
-orbs:
-  slack: circleci/slack@4.3.0
 
 commands:
-  notify_slack_error:
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -452,7 +445,7 @@ commands:
             when: on_fail
             command: |
                 # Example: kvdb.io
-                SUCCESS=$(curl --insecure  https://kvdb.io/9QYu1AzEtPnLKeZ3vG66Qb/migration_<< parameters.workflow_id >>)
+                SUCCESS=$(curl --insecure  https://kvdb.io/6eLY5UTvP4v8SmJrJZREtn/migration_<< parameters.workflow_id >>)
                 # Logic for reverting the database state
                 if (( $SUCCESS == 1 ));
                 then
@@ -476,7 +469,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - notify_slack_error
+
   build-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -492,7 +485,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - notify_slack_error
+
   test-frontend:
     docker:
        - image: circleci/node:13.8.0
@@ -592,7 +585,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-         fingerprints: ["	44:15:3d:14:fb:2a:01:30:79:7e:39:35:97:8a:4e:90"] 
+         fingerprints: ["b6:3d:33:9b:76:47:d6:bc:04:1d:c6:e4:ff:da:6d:be"] 
       - attach_workspace:
           at: ~/
       - run:
@@ -629,7 +622,7 @@ jobs:
            if grep -q "has been executed successfully." ./backend/migrations_dump.txt
            then
            # bucket id created from curl -d 'email=your-email-ID@domain.com' https://kvdb.io
-           curl https://kvdb.io/9QYu1AzEtPnLKeZ3vG66Qb/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+           curl https://kvdb.io/6eLY5UTvP4v8SmJrJZREtn/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
            fi
 
   deploy-frontend:
@@ -676,7 +669,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-         fingerprints: ["	44:15:3d:14:fb:2a:01:30:79:7e:39:35:97:8a:4e:90"] 
+         fingerprints: ["b6:3d:33:9b:76:47:d6:bc:04:1d:c6:e4:ff:da:6d:be"] 
       - attach_workspace:
           at: ~/
       - run:
