@@ -220,6 +220,9 @@ jobs:
             cd backend
             npm install 
             npm audit fix --force --audit-level=critical
+            Run  npm install passport-jwt@4.0.1
+            Run  npm update path-parse --depth 3
+            Run  npm update mkdirp --depth 2
             npm audit
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
