@@ -218,8 +218,9 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm install @npmcli/package-json
-            npm audit fix --force --production
+            npm cache clean --force
+            npm install
+            # npm audit fix --force --production
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to memstash
