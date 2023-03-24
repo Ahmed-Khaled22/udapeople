@@ -22,9 +22,9 @@
 
   register: execute_node
 
-- name: "message"
+- name: message
   debug:
-  msg: "{{ execute_node.stdout_lines }}"
+    msg: "{{ execute_node.stdout_lines }}"
 
 - name: "start PM2 as service"
   become: true
