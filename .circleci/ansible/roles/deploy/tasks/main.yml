@@ -6,7 +6,7 @@
 
 - name: unarchive backend
   unarchive:
-    src: artifact.tar.gz
+    src: ./roles/deploy/filesartifact.tar.gz
     dest: ~/backend-app
 
 - name: "Installing Node Dependencies"

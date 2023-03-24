@@ -312,6 +312,8 @@ jobs:
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
             --output text --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}")
+            ls backend
+            ls .circleci/ansible/roles/deploy/files
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
