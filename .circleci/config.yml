@@ -206,7 +206,7 @@ jobs:
       - install_awscli
       - add_ssh_keys:
           fingerprints:
-            - "b6:3d:33:9b:76:47:d6:bc:04:1d:c6:e4:ff:da:6d:be"
+            - "01:c4:7b:08:67:46:1b:ca:a7:8d:42:c3:e4:80:ef:86"
       - attach_workspace:
           at: ~/
       - run:
@@ -284,7 +284,7 @@ jobs:
       - install_nodejs
       - add_ssh_keys:
           fingerprints:
-            - "b6:3d:33:9b:76:47:d6:bc:04:1d:c6:e4:ff:da:6d:be"
+            - "01:c4:7b:08:67:46:1b:ca:a7:8d:42:c3:e4:80:ef:86"
       - attach_workspace:
           at: ~/
       - restore_cache:
