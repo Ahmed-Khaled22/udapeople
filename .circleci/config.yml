@@ -301,17 +301,12 @@ jobs:
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
-            ls
-            # tar -czf artifact.tar.gz dist/* package*
-            # cd ..
-            # cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
-
       - run:
           name: Deploy backend
           command: |
-            TYPEORM_MIGRATIONS_DIR=./migrations
-            TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
-            TYPEORM_MIGRATIONS=./migrations/*.ts
+            export TYPEORM_MIGRATIONS_DIR=./migrations
+            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+            export TYPEORM_MIGRATIONS=./migrations/*.ts
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
             --output text --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}")
