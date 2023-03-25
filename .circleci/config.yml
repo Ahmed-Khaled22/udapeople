@@ -299,9 +299,12 @@ jobs:
           command: |
             cd backend
             npm run build
-            tar -czf artifact.tar.gz dist/* package*
             cd ..
-            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+            tar -C backend -czvf artifact.tar.gz .
+            ls
+            # tar -czf artifact.tar.gz dist/* package*
+            # cd ..
+            # cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
 
       - run:
           name: Deploy backend
@@ -312,7 +315,8 @@ jobs:
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
             --output text --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}")
-            ls .circleci/ansible/roles/deploy/files
+            pwd
+            ls 
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
