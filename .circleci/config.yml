@@ -206,7 +206,7 @@ jobs:
       - install_awscli
       - add_ssh_keys:
           fingerprints:
-            - "cf:ce:c6:85:52:2f:aa:ba:ef:c6:7d:26:54:65:80:32:1b:93:b0:01"
+            - "01:c4:7b:08:67:46:1b:ca:a7:8d:42:c3:e4:80:ef:86"
       - attach_workspace:
           at: ~/
       - run:
@@ -263,7 +263,7 @@ jobs:
             BACKEND_IP=$(aws ec2 describe-instances \
             --output text --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}")
-            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            echo "API_URL=http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -284,7 +284,7 @@ jobs:
       - install_nodejs
       - add_ssh_keys:
           fingerprints:
-            - "cf:ce:c6:85:52:2f:aa:ba:ef:c6:7d:26:54:65:80:32:1b:93:b0:01"
+            - "01:c4:7b:08:67:46:1b:ca:a7:8d:42:c3:e4:80:ef:86"
       - attach_workspace:
           at: ~/
       - restore_cache:
