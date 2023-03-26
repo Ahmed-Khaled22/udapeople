@@ -365,6 +365,8 @@ jobs:
             --no-paginate --output text)
             echo $OldWorkflowID >> ~/OldWorkflowID.txt
             cat ~/OldWorkflowID.txt
+            pwd 
+            ls
       - run:
           name: Update cloudfront distribution
           command: |
