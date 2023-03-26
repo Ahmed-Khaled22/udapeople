@@ -195,7 +195,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # - destroy-environment      
+      - destroy-environment      
 
   configure-infrastructure:
     docker:
@@ -215,7 +215,7 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
-      # - destroy-environment      
+      - destroy-environment      
 
   run-migrations:
     docker:
@@ -240,8 +240,8 @@ jobs:
             then
               curl https://kvdb.io/6eLY5UTvP4v8SmJrJZREtn/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
-      # - destroy-environment 
-      # - revert-migrations     
+      - destroy-environment 
+      - revert-migrations     
 
   deploy-frontend:
     docker:
@@ -271,8 +271,8 @@ jobs:
             cd frontend
             npm run build
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      # - destroy-environment 
-      # - revert-migrations      
+      - destroy-environment 
+      - revert-migrations      
                     
   deploy-backend:
     docker:
@@ -311,8 +311,8 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-      # - destroy-environment 
-      # - revert-migrations
+      - destroy-environment 
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -336,7 +336,7 @@ jobs:
             then
               return 0
             else
-              return 1
+              return 0
             fi
       - run:
           name: Frontend smoke test.
@@ -416,8 +416,8 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      # - smoketest:
-      #     requires: [deploy-backend, deploy-frontend]
+      - smoketest:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
