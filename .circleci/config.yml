@@ -144,6 +144,7 @@ jobs:
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
+            echo "scan done"
 
   scan-backend:
     docker:
@@ -160,6 +161,7 @@ jobs:
              npm audit fix --force --audit-level=critical
              npm audit fix --force --audit-level=critical
              npm audit --audit-level=critical
+             echo "scan done"
 
   deploy-infrastructure:
     docker:
