@@ -219,7 +219,7 @@ jobs:
 
   run-migrations:
     docker:
-      - image: cimg/node:13.8.0
+      - image: cimg/node:16.13.0
     steps:
       - checkout
       - install_awscli
@@ -229,7 +229,7 @@ jobs:
             export TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             cd backend
             # npm set audit false
-            npm install # @npmcli/package-json
+            npm install @npmcli/package-json
             # npm audit fix
             npm premigrations
             npm run migrations #> migrations_dump.txt
