@@ -231,7 +231,7 @@ jobs:
             # npm set audit false
             npm install @npmcli/package-json
             # npm audit fix
-            npm premigrations
+            npm run premigrations
             npm run migrations #> migrations_dump.txt
             # cat migrations_dump.txt
       - run:
@@ -242,8 +242,8 @@ jobs:
             then
               curl https://kvdb.io/6eLY5UTvP4v8SmJrJZREtn/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
-      - destroy-environment 
-      - revert-migrations     
+      # - destroy-environment 
+      # - revert-migrations     
 
   deploy-frontend:
     docker:
