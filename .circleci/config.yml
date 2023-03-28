@@ -310,7 +310,8 @@ jobs:
             echo "TYPEORM_USERNAME=${TYPEORM_USERNAME}" >> .env
             echo "TYPEORM_PASSWORD=${TYPEORM_PASSWORD}" >> .env
             echo "TYPEORM_DATABASE=${TYPEORM_DATABASE}" >> .env
-            echo "TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)"  >> .env
+
+            echo "TYPEORM_HOST=(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)"  >> .env
             
             tar -czf artifact.tar.gz dist/* package* .env
             cp artifact.tar.gz /home/circleci/project/artifact.tar.gz
