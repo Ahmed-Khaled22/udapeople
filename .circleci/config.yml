@@ -233,7 +233,7 @@ jobs:
             cat .env
             npm install
             npm run build
-            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            aws s3 cp dist s3://udapeople-78b13c3 --recursive
       - destroy_environment 
       - revert-migrations            
                     
