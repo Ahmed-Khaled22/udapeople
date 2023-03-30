@@ -178,7 +178,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["27:78:b2:c0:6b:f7:d3:06:95:22:1c:ee:28:56:4f:b3"]
+          fingerprints: ["4a:88:aa:5e:1b:dd:ff:bf:91:86:f8:a4:53:ed:bd:70"]
       - attach_workspace:
           at: ~/
       - run:
@@ -243,7 +243,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["27:78:b2:c0:6b:f7:d3:06:95:22:1c:ee:28:56:4f:b3"]
+          fingerprints: ["4a:88:aa:5e:1b:dd:ff:bf:91:86:f8:a4:53:ed:bd:70"]
       - run:
           name: Deploy backend
           command: |
@@ -349,25 +349,25 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches: 
-      #         only: [main]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      - deploy-infrastructure #:
+          # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          # filters:
+          #   branches: 
+          #     only: [main]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
       # - deploy-frontend:
           # requires: [run-migrations]
       # - deploy-backend:
