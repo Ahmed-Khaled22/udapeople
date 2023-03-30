@@ -178,7 +178,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["4a:88:aa:5e:1b:dd:ff:bf:91:86:f8:a4:53:ed:bd:70"]
+          fingerprints: ["5e:20:bf:ab:bf:e5:84:30:25:c2:e9:39:67:d8:23:de"]
       - attach_workspace:
           at: ~/
       - run:
@@ -243,7 +243,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["4a:88:aa:5e:1b:dd:ff:bf:91:86:f8:a4:53:ed:bd:70"]
+          fingerprints: ["5e:20:bf:ab:bf:e5:84:30:25:c2:e9:39:67:d8:23:de"]
       - run:
           name: Deploy backend
           command: |
@@ -281,7 +281,8 @@ jobs:
             export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 \
             --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             URL="http://$BACKEND_PUBLIC_IP:3030/api/status"
-            if curl -s ${URL} | grep "ok"
+            echo URL
+            if curl -s $URL | grep "ok"
             then
               exit 0
             else
@@ -298,8 +299,8 @@ jobs:
             else
               exit 1
             fi      
-      - destroy_environment
-      - revert-migrations      
+      # - destroy_environment
+      # - revert-migrations      
 
   cloudfront-update:
     docker:
@@ -321,8 +322,8 @@ jobs:
               --template-file .circleci/files/cloudfront.yml \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name InitialStack 
-      - destroy_environment 
-      - revert-migrations        
+      # - destroy_environment 
+      # - revert-migrations        
 
   cleanup:
     docker:
@@ -359,7 +360,7 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      - deploy-infrastructure #:
+      - deploy-infrastructure:
           # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           # filters:
           #   branches: 
@@ -372,9 +373,9 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [deploy-frontend]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [deploy-frontend]
       # - cleanup:
       #     requires: [cloudfront-update]
