@@ -1,0 +1,36 @@
+---
+
+- name: "node exporter play." 
+  hosts: web
+  user: ubuntu
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    - ansible_host_key_checking: false
+    - ansible_stdout_callback: yaml
+
+
+  pre_tasks:
+    - name: "install python for Ansible."
+      become: true
+      apt:
+        name: python3
+        state: latest
+
+  tasks: 
+    - name: Download Node Exporter
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz"
+        dest: /tmp/node_exporter.tar.gz
+        remote_src: yes
+        mode: 'u+x,g+x,o+x'
+
+    - name: Extract Node Exporter
+      become: true
+      unarchive:
+        src: "/tmp/node_exporter.tar.gz"
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: '0777'

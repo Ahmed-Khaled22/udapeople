@@ -1,79 +1,35 @@
-- name: "install node.js"
-  become: true
-  shell: |
-    curl -SL https://deb.nodesource.com/setup_19.x | sudo -E bash -
-    
-- name: "install node.js"
+---
+
+- name: "install dependencies."
   become: true
   apt:
-    name: ["nodejs"]
+    name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
 
 - name: "install pm2"
+  become: true
   npm:
     name: pm2
     global: yes
+    production: yes
+    state: present
 
 
-- name: Install docker packages
-  remote_user: ubuntu
+
+- name: "install docker."
+  become: true
   apt:
-    name: "{{ item }}"
-    state: present
+    name: ["docker.io"]
+    state: latest
     update_cache: yes
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - software-properties-common
-  tags:
-    - docker
-- name: Add Docker s official GPG key
-  remote_user: ubuntu
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
-  tags:
-    - docker
-- name: Verify that we have the key with the fingerprint
-  remote_user: ubuntu
-  apt_key:
-    id: 0EBFCD88
-    state: present
-  tags:
-    - docker
-- name: Set up the stable repository
-  remote_user: ubuntu
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
-    state: present
-    update_cache: yes
-  tags:
-    - docker
-- name: Update apt packages
-  remote_user: ubuntu
-  apt:
-    update_cache: yes
-  tags:
-    - docker
-- name: Install docker
-  remote_user: ubuntu
-  apt:
-    name: docker-ce
-    state: present
-    update_cache: yes
-  #notify: Start docker on boot
-  tags:
-    - docker
-- name: Add remote "ubuntu" user to "docker" group
-  remote_user: ubuntu
-  user:
-    name: "ubuntu"
-    group: "docker"
-    append: yes
-  tags:
-    - docker
+
+- name: sudo usermod -aG docker root
+  become: True
+  shell:
+    cmd: "usermod -aG docker ubuntu"
+    chdir: .
+
 - name: Install docker-compose
   remote_user: ubuntu
   get_url: 
@@ -89,4 +45,4 @@
   become: True
   shell:
     cmd: "docker-compose -f docker-compose.yml up -d"
-    chdir: .    
+    chdir: .
