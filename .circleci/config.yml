@@ -33,7 +33,6 @@ commands:
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
-              exit 0
               cd ~/project/backend
               npm install
               npm run migrations:revert
@@ -284,7 +283,7 @@ jobs:
             echo $URL
             if curl -s $URL | grep "ok"
             then
-              exit 1
+              exit 0
             else
               exit 1
             fi
@@ -375,13 +374,13 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      # - deploy-frontend :
-      #     requires: [run-migrations]
+      - deploy-frontend :
+          requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
-          requires: [deploy-backend] #, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
