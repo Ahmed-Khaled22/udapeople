@@ -210,17 +210,17 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-            npm istall --save-dev  @nestjs/common@^6.0.0
-            npm istall --save-dev  @nestjs/core@^6.0.0
-            npm istall --save-dev  reflect-metadata@0.1.12
-            npm istall --save-dev  passport@^0.4.0
-            npm istall --save-dev  @nestjs/common@^6.7.0
-            npm istall --save-dev  @nestjs/core@^6.7.0
-            npm istall --save-dev  typeorm@^0.2.7
-            npm istall --save-dev  winston@2.x.x
-            npm istall --save-dev  typescript@^4.3
-            npm istall --save-dev  rxjs@^7.1.0
-            npm istall --save-dev  ajv@^6.9.1
+            npm install --save-dev  @nestjs/common@^6.0.0
+            npm install --save-dev  @nestjs/core@^6.0.0
+            npm install --save-dev  reflect-metadata@0.1.12
+            npm install --save-dev  passport@^0.4.0
+            npm install --save-dev  @nestjs/common@^6.7.0
+            npm install --save-dev  @nestjs/core@^6.7.0
+            npm install --save-dev  typeorm@^0.2.7
+            npm install --save-dev  winston@2.x.x
+            npm install --save-dev  typescript@^4.3
+            npm install --save-dev  rxjs@^7.1.0
+            npm install --save-dev  ajv@^6.9.1
             # cat ~/project/backend/migrations_dump.txt
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             theni
